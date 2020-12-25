@@ -66,8 +66,8 @@ function Book(title,author,pages,read) {
 bookButton.addEventListener('click',()=>{
   bookInformation.style.display = 'block'
   backgroundDisplay.style.display = 'block'
-  var userID = user.getIdToken()
-  firebase.database().ref('users/' + userID).set(myLibrary);
+  //var userID = user.getIdToken()
+  firebase.database().ref('users/').set(myLibrary);
   
 
  
