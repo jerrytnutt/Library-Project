@@ -26,7 +26,7 @@ enterButton.addEventListener('click',()=>{
     var token = result.credential.accessToken;
     // The signed-in user info.
     var user = result.user;
-    console.log(1)
+    console.log(user)
     // ...
   }).catch(function(error) {
     console.log(error.message)
@@ -43,6 +43,14 @@ enterButton.addEventListener('click',()=>{
   //backgroundDisplay.style.display = 'none'
 });
 
+const signOut = document.querySelector('.signOut')
+signOut.addEventListener('click',()=>{
+  FirebaseAuth.getInstance().signOut();
+  console.log(6)
+  
+  //fireInfo.style.display = 'none'
+  //backgroundDisplay.style.display = 'none'
+});
 // Book constructor function
 function Book(title,author,pages,read) {
     this.title = title,
