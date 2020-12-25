@@ -15,38 +15,27 @@ storageButton.addEventListener('click',()=>{
   fireInfo.style.display = 'block'
   backgroundDisplay.style.display = 'block'
 });
-var token = ''
-    // The signed-in user info.
+
+var provider = new firebase.auth.GoogleAuthProvider();
 var user = ''
 
-
 const enterButton = document.querySelector('.enter')
+
 enterButton.addEventListener('click',()=>{
   
-  var provider = new firebase.auth.GoogleAuthProvider();
+  
   firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    token = result.credential.accessToken;
-    // The signed-in user info.
+    
+  
     user = result.user;
-    if (user.ar){
-      console.log(user.ar)
-    }else{
-      console.log('none')
-    }
-    console.log(user)
-    console.log(token)
-    // ...
+    
+    
   }).catch(function(error) {
     console.log(error.message)
-    // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    // The email of the user's account used.
     var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
     var credential = error.credential;
-    // ...
   });
   fireInfo.style.display = 'none'
   backgroundDisplay.style.display = 'none'
@@ -54,15 +43,13 @@ enterButton.addEventListener('click',()=>{
 
 const signOut = document.querySelector('.signOut')
 signOut.addEventListener('click',()=>{
-  console.log('sign')
-  user.ar = [1,2,3]
+  
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
   }).catch(function(error) {
     // An error happened.
   });
-  console.log(user)
-  console.log(token)
+  
   
   //fireInfo.style.display = 'none'
   //backgroundDisplay.style.display = 'none'
@@ -79,13 +66,10 @@ function Book(title,author,pages,read) {
 bookButton.addEventListener('click',()=>{
   bookInformation.style.display = 'block'
   backgroundDisplay.style.display = 'block'
-  var user = firebase.auth().currentUser;
-  if (user) {
-    console.log(user)
-    console.log(token)
-  } else {
-  console.log('none')
-  }
+  var userID = user.getIdToken()
+  firebase.database().ref('users/' + userID).set(myLibrary);
+  
+
  
 });
 
