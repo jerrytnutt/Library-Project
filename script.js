@@ -14,7 +14,9 @@ storageButton.addEventListener('click',()=>{
   fireInfo.style.display = 'block'
   backgroundDisplay.style.display = 'block'
 });
-
+var token = ''
+    // The signed-in user info.
+var user = ''
 
 
 const enterButton = document.querySelector('.enter')
@@ -23,10 +25,11 @@ enterButton.addEventListener('click',()=>{
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
+    token = result.credential.accessToken;
     // The signed-in user info.
-    var user = result.user;
+    user = result.user;
     console.log(user)
+    console.log(token)
     // ...
   }).catch(function(error) {
     console.log(error.message)
@@ -39,14 +42,16 @@ enterButton.addEventListener('click',()=>{
     var credential = error.credential;
     // ...
   });
-  //fireInfo.style.display = 'none'
-  //backgroundDisplay.style.display = 'none'
+  fireInfo.style.display = 'none'
+  backgroundDisplay.style.display = 'none'
 });
 
 const signOut = document.querySelector('.signOut')
 signOut.addEventListener('click',()=>{
+  console.log('sign')
   FirebaseAuth.getInstance().signOut();
-  console.log(6)
+  console.log(user)
+  console.log(token)
   
   //fireInfo.style.display = 'none'
   //backgroundDisplay.style.display = 'none'
