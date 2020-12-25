@@ -1,7 +1,7 @@
 let myLibrary = [];
 let currentBook = 0
 console.log(firebase)
-console.log(55)
+console.log(60)
 //localStorage.removeItem('library')
 const bookButton = document.querySelector('.bookButton')
 const bookInformation = document.querySelector('.bookInformation')
@@ -56,7 +56,11 @@ const signOut = document.querySelector('.signOut')
 signOut.addEventListener('click',()=>{
   console.log('sign')
   user.ar = [1,2,3]
-  firebase.auth.getInstance().signOut();
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
   console.log(user)
   console.log(token)
   
