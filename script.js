@@ -1,6 +1,7 @@
 let myLibrary = [];
 let currentBook = 0
 console.log(firebase)
+console.log(55)
 //localStorage.removeItem('library')
 const bookButton = document.querySelector('.bookButton')
 const bookInformation = document.querySelector('.bookInformation')
@@ -21,7 +22,7 @@ var user = ''
 
 const enterButton = document.querySelector('.enter')
 enterButton.addEventListener('click',()=>{
-  console.log(7)
+  
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
