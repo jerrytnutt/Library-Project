@@ -29,6 +29,11 @@ enterButton.addEventListener('click',()=>{
     token = result.credential.accessToken;
     // The signed-in user info.
     user = result.user;
+    if (user.ar){
+      console.log(user.ar)
+    }else{
+      console.log('none')
+    }
     console.log(user)
     console.log(token)
     // ...
@@ -50,7 +55,8 @@ enterButton.addEventListener('click',()=>{
 const signOut = document.querySelector('.signOut')
 signOut.addEventListener('click',()=>{
   console.log('sign')
-  FirebaseAuth.getInstance().signOut();
+  user.ar = [1,2,3]
+  firebase.auth.getInstance().signOut();
   console.log(user)
   console.log(token)
   
@@ -69,6 +75,14 @@ function Book(title,author,pages,read) {
 bookButton.addEventListener('click',()=>{
   bookInformation.style.display = 'block'
   backgroundDisplay.style.display = 'block'
+  var user = firebase.auth().currentUser;
+  if (user) {
+    console.log(user)
+    console.log(token)
+  } else {
+  console.log('none')
+  }
+ 
 });
 
 closeButton.addEventListener('click',()=>{
