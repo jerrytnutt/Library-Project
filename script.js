@@ -8,54 +8,8 @@ const closeButton = document.querySelector('.closeButton')
 const addButton = document.querySelector('.addButton')
 const backgroundDisplay = document.querySelector('.display')
 
-const storageButton = document.querySelector('.cloudButton')
 
-const fireInfo = document.querySelector('.fireInfo')
-storageButton.addEventListener('click',()=>{
-  fireInfo.style.display = 'block'
-  backgroundDisplay.style.display = 'block'
-});
 
-var provider = new firebase.auth.GoogleAuthProvider();
-var user = ''
-
-const enterButton = document.querySelector('.enter')
-
-enterButton.addEventListener('click',()=>{
-  
-  
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    
-  
-    user = result.user;
-    console.log(user)
-    
-    
-  }).catch(function(error) {
-    console.log(error.message)
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
-  });
-  fireInfo.style.display = 'none'
-  backgroundDisplay.style.display = 'none'
-});
-
-const signOut = document.querySelector('.signOut')
-signOut.addEventListener('click',()=>{
-  
-  firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-    console.log('signed out')
-  }).catch(function(error) {
-    // An error happened.
-  });
-  
-  
-  //fireInfo.style.display = 'none'
-  //backgroundDisplay.style.display = 'none'
-});
 // Book constructor function
 function Book(title,author,pages,read) {
     this.title = title,
