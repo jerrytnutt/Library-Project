@@ -1,7 +1,6 @@
 let myLibrary = [];
 let currentBook = 0
-console.log(firebase)
-console.log(60)
+
 //localStorage.removeItem('library')
 const bookButton = document.querySelector('.bookButton')
 const bookInformation = document.querySelector('.bookInformation')
@@ -10,6 +9,7 @@ const addButton = document.querySelector('.addButton')
 const backgroundDisplay = document.querySelector('.display')
 
 const storageButton = document.querySelector('.cloudButton')
+
 const fireInfo = document.querySelector('.fireInfo')
 storageButton.addEventListener('click',()=>{
   fireInfo.style.display = 'block'
@@ -28,6 +28,7 @@ enterButton.addEventListener('click',()=>{
     
   
     user = result.user;
+    console.log(user)
     
     
   }).catch(function(error) {
@@ -46,6 +47,7 @@ signOut.addEventListener('click',()=>{
   
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
+    console.log('signed out')
   }).catch(function(error) {
     // An error happened.
   });
@@ -67,7 +69,7 @@ bookButton.addEventListener('click',()=>{
   bookInformation.style.display = 'block'
   backgroundDisplay.style.display = 'block'
   //var userID = user.getIdToken()
-  firebase.database().ref('users/').set(myLibrary);
+  //firebase.database().ref('users/').set(myLibrary);
   
 
  
