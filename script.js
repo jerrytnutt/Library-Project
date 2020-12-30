@@ -1,14 +1,13 @@
 let myLibrary = [];
 let currentBook = 0
+let editArray = []
 
-//localStorage.removeItem('library')
-const bookButton = document.querySelector('.bookButton')
+const container = document.querySelector('.container')
+const addBookButton = document.querySelector('.addBookButton')
 const bookInformation = document.querySelector('.bookInformation')
 const closeButton = document.querySelector('.closeButton')
-const addButton = document.querySelector('.addButton')
+const appendButton = document.querySelector('.appendButton')
 const backgroundDisplay = document.querySelector('.display')
-
-
 
 // Book constructor function
 function Book(title,author,pages,read) {
@@ -18,64 +17,63 @@ function Book(title,author,pages,read) {
     this.read = read
 }
 
-// Two functions that control the shaded background display when entering information
-bookButton.addEventListener('click',()=>{
+// Two functions that control the book info div and shaded background when entering information
+addBookButton.addEventListener('click',displayBookInformation)
+
+function displayBookInformation(){
   bookInformation.style.display = 'block'
   backgroundDisplay.style.display = 'block'
-  //var userID = user.getIdToken()
-  //firebase.database().ref('users/').set(myLibrary);
-  
-
- 
-});
+ }
 
 closeButton.addEventListener('click',()=>{
   bookInformation.style.display = 'none'
   backgroundDisplay.style.display = 'none'
 });
 
-addButton.addEventListener('click',addBookToLibrary)
+appendButton.addEventListener('click',addBookToLibrary)
 
 function addBookToLibrary(){
   // Grab all user inputs from the book information box
-    var titleInput = document.querySelector('#title').value
-    var authorInput = document.querySelector('#author').value
-    var pagesInput = document.querySelector('#pages').value
-    var checkBox = document.querySelector('#check')
+    let titleInput = document.querySelector('#title').value
+    let authorInput = document.querySelector('#author').value
+    let pagesInput = document.querySelector('#pages').value
+    let checkBox = document.querySelector('#check')
 
-    var checkBoxData = ''
-    var numberOfInputs = 0
-
-    if (titleInput){
-        numberOfInputs += 1
-    }else{
-        alert('Please Include a Book Title')
+  // Check if all inputs were added by user
+    if (!titleInput){
+      return alert('Please Include a book Title')
     }
-    if (authorInput){
-        numberOfInputs += 1
-    }else{
-        alert('Please Include the books Author')
+    if (!authorInput){
+      return alert("Please Include the book's Author")
     }
-    if (pagesInput){
-        numberOfInputs += 1
-    }else{
-        alert('Please Include the number of pages')
+    if (!pagesInput){
+      return alert('Please Include the number of pages')
     }
     if (checkBox.checked){
-      checkBoxData = 'Read'
+      checkBox = 'Read'
     }else{
-      checkBoxData = 'Not Read'
+      checkBox = 'Not Read'
     }
-    if (numberOfInputs == 3){
-      // Create new book object with user information
-      let newBook = new Book(titleInput,authorInput,pagesInput,checkBoxData)
-      myLibrary.push(newBook)
-      localStorage.setItem('library',JSON.stringify(myLibrary))
-      bookInformation.style.display = 'none'
-      backgroundDisplay.style.display = 'none'
-      return appendBook(newBook)
-    
-  }
+
+    let newBook = new Book(titleInput,authorInput,pagesInput,checkBox)
+    bookInformation.style.display = 'none'
+    backgroundDisplay.style.display = 'none'
+
+    // Check if user is adding new book or an editing an existing one
+      if(editArray.length == 0){
+        myLibrary.push(newBook)
+        localStorage.setItem('library',JSON.stringify(myLibrary))
+        return appendBook(newBook)
+
+      }else{
+        myLibrary[editArray[0]] = newBook
+        editArray[1].childNodes[0].innerHTML = titleInput
+        editArray[1].childNodes[1].innerHTML = authorInput
+        editArray[1].childNodes[2].innerHTML = `Pages: ${newBook.pages}`;
+        localStorage.setItem('library',JSON.stringify(myLibrary))
+        editArray = []
+        return editArray
+      }
 }
 
 function appendBook(newBook){
@@ -85,68 +83,88 @@ function appendBook(newBook){
        
     const titleDiv = document.createElement("div");
     titleDiv.classList.add("title");
-    titleDiv.innerHTML += newBook.title;
+    titleDiv.innerHTML = newBook.title;
 
     const authorDiv = document.createElement("div");
-    authorDiv.innerHTML += newBook.author
-    authorDiv.classList.add("info");
+    authorDiv.innerHTML = newBook.author
+    authorDiv.classList.add("author");
 
     const pagesDiv = document.createElement("div");
-    pagesDiv.innerHTML += `Pages: ${newBook.pages}`;
-    pagesDiv.classList.add("pageInfo");
+    pagesDiv.innerHTML = `Pages: ${newBook.pages}`;
+    pagesDiv.classList.add("pagenumber");
+
+    newDiv.appendChild(titleDiv); 
+    newDiv.appendChild(authorDiv);
+    newDiv.appendChild(pagesDiv);
 
     const readButton = document.createElement("button");
     readButton.classList.add("readButton");
-    
-    const colorObj = {'Read':'#00d600','Not Read':'#eb0800'}
     readButton.innerHTML = newBook.read
-    readButton.style.background = colorObj[newBook.read]
+    
+    const readButtonColors = {'Read':'#00d600','Not Read':'#eb0800'}
+    readButton.style.background = readButtonColors[newBook.read]
 
-      // Save the array index for each book so the read status on the book object can be changed
-       var index = currentBook
-       function changeReadStatus(){
-        var bookIndex = index
+      // Save the array index for each current book so the read status on the correct book object will be changed
+      let index = currentBook
+
+       readButton.addEventListener('click',()=>{
+        let bookIndex = index
         if (myLibrary[bookIndex].read == 'Read'){
+
           myLibrary[bookIndex].read = 'Not Read'
           readButton.innerHTML = myLibrary[bookIndex].read 
           readButton.style.background = '#eb0800'
         } else{
+
           myLibrary[bookIndex].read = 'Read'
           readButton.innerHTML = myLibrary[bookIndex].read 
           readButton.style.background = '#00d600'
         }
         localStorage.setItem('library',JSON.stringify(myLibrary))
-     }
-      readButton.addEventListener('click',changeReadStatus)
-          
-       newDiv.appendChild(titleDiv); 
-       newDiv.appendChild(authorDiv);
-       newDiv.appendChild(pagesDiv);
+     });
+     
+      const editButton = document.createElement("button");
+      editButton.classList.add("editButton");
+      editButton.innerHTML += 'Edit'
+
+       editButton.addEventListener('click',(e)=>{
+         // Save the current book index and the DOM element in editArray
+         let selectedBook = myLibrary.findIndex(a => a.title == newBook.title && a.author == newBook.author && a.pages == newBook.pages)
+         editArray[0] = selectedBook
+         editArray[1] = e.target.parentNode
+         return displayBookInformation()
+    });
 
        const removeButton = document.createElement("button");
        removeButton.classList.add("removeButton");
        removeButton.innerHTML += 'Remove'
        
-       // Remove feature based on current books index in the library
        removeButton.addEventListener('click',(e)=>{
-         var removeIndex = newBook
-         
-         myLibrary.splice(myLibrary.findIndex(a => a.title == removeIndex.title) , 1)
-
+         // Splice out the selected book and remove DOM node
+         let removeIndex = newBook
+         myLibrary.splice(myLibrary.findIndex(a => a.title == removeIndex.title && a.author == removeIndex.author && a.pages == removeIndex.pages) , 1)
          localStorage.setItem('library',JSON.stringify(myLibrary))
          return e.target.parentNode.remove()
   });
+       
        newDiv.appendChild(readButton);
+       newDiv.appendChild(editButton);
        newDiv.appendChild(removeButton);
-       const container = document.querySelector('.container')
+
        container.appendChild(newDiv);
-       currentBook = currentBook + 1
+       editArray = []
+       return currentBook = currentBook + 1
     }
-  
+
 // Check local storage for a saved library
 function checkStorage(){
   if (localStorage.getItem('library') == null){
-    console.log('none')
+    let theBladeItself = new Book('The Blade Itself','Joe Abercrombie','560','Read')
+    let historyOfTime = new Book('A Brief History of Time','Stephen Hawking','256','Read')
+     myLibrary.push(theBladeItself)
+     myLibrary.push(historyOfTime)
+     appendBook(theBladeItself)
+     appendBook(historyOfTime)
   }else{
     myLibrary = localStorage.getItem('library')
     myLibrary = JSON.parse(myLibrary)
@@ -156,3 +174,6 @@ function checkStorage(){
   }
 }
 checkStorage()
+
+
+

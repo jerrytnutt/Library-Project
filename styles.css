@@ -4,28 +4,35 @@ body{
     justify-content: center;
     align-items: center;
     background-color: #f2f2f2;
-    padding-right: 10px;
-    padding-right: 10px;
 }
 .display{
-  position: fixed; 
-  display: none;
-  width: 100%; 
-  height: 100%; 
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5); 
-  z-index: 1;  
-}
+    position: fixed; 
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); 
+    z-index: 1;  
+  }
 h1{
     font-family: 'Verdana', 'sans-serif';
     font-weight: bold;
     color: #292929;
     font-size: 35px;
 }
-.bookButton{
+.topScreen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+    border-bottom: 3px black solid;
+    background-color: #d3d3d3;
+}
+.addBookButton{
     border-radius: 5px;
     background-color: #5882c7;
     font-size: 18px;
@@ -35,7 +42,7 @@ h1{
     margin-bottom: 10px;
     cursor: pointer;
 }
-.bookButton:hover {
+.addBookButton:hover {
     background-color: #7ea3de;
 }
 .container{
@@ -43,33 +50,6 @@ h1{
     flex-wrap: wrap;
     width: 95%;
 }
-.storageInformation{
-   border: 5px solid rgb(131, 131, 131);
-    background-color: #030303;
-    
-}
-.cloudButton{
-    height: 30px;
-    width: 150px;
-    border-radius: 3px;
-    font-size: 15px;
-    cursor: pointer;
-    
-
-}
-.fireInfo{
-    padding-left: 20px;
-    font-family: 'Georgia', 'serif';
-    height: 450px;
-    width: 350px;
-    position: absolute;
-    border: 5px solid rgb(131, 131, 131);
-    background-color: #c4d4ee;
-    border-radius: 5px;
-    top: 150px;
-    display: none;
-    z-index: 2;
-  }
 .bookInformation{
   padding-left: 20px;
   font-family: 'Georgia', 'serif';
@@ -118,7 +98,7 @@ h1{
     margin-left: 6px;
     cursor: pointer;
 }
-.addButton{
+.appendButton{
     height: 30px;
     width: 150px;
     border-radius: 3px;
@@ -127,13 +107,15 @@ h1{
 }
 .book{
   word-wrap: break-word;
-  width: 250px;
-  padding: 5px;
+  height: 350px;
+  width: 20%;
   margin-top: 10px;
   padding-top: 10px;
   font-family: 'Georgia', 'serif';
   text-align: center;
+  font-size: 20px;
   background-color: #c3c3e0;
+  border: 1px solid grey;
   border-radius: 5px;
   margin-right: 15px;
 }
@@ -142,41 +124,41 @@ h1{
 }
 .title{
     font-weight: bold;
-    font-size: 22px;
-    margin-bottom: 10px;;
+    font-size: 23px;
+    margin-bottom: 10px;
 }
-.info{
-    font-size: 20px;
-    font-family: 'Georgia', 'serif';
-}
-.pageInfo{
-    font-size: 20px;
-    font-family: 'Georgia', 'serif';
+
+.pagenumber{
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
-.readButton{
+.readButton, .removeButton, .editButton{
     height: 35px;
     border: 0px;
     width: 100%;
+    font-size: 20px;
+    
+    border-radius: 5px;
     margin-bottom: 5px;
-    font-size: 20px;
-    border-radius: 5px;
     cursor: pointer;
+
 }
+.readButton:hover, .removeButton:hover, .editButton:hover{
+    font-weight: bold;
+
+}
+
 .removeButton{
-    height: 35px;
-    width: 100%;
-    font-size: 20px;
-    border: 0px;
-    border-radius: 5px;
     background-color: rgb(253, 17, 17);
     color: black;
-    cursor: pointer;
 }
 .removeButton:hover{
     background-color: rgb(251 29 29);
 }
+.editButton{
+    background-color: #2f2fe8;
+}
+
 
 
   
