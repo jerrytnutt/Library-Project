@@ -50,7 +50,7 @@ function addBookToLibrary(){
       return alert('Please Include the number of pages')
     }
     if (checkBox.checked){
-      checkBox = 'Read'
+      checkBox = 'Complete'
     }else{
       checkBox = 'Not Read'
     }
@@ -101,7 +101,7 @@ function appendBook(newBook){
     readButton.classList.add("readButton");
     readButton.innerHTML = newBook.read
     
-    const readButtonColors = {'Read':'#00d600','Not Read':'#eb0800'}
+    const readButtonColors = {'Complete':'#00d600','Not Read':'#eb0800'}
     readButton.style.background = readButtonColors[newBook.read]
 
       // Save the array index for each current book so the read status on the correct book object will be changed
@@ -109,14 +109,14 @@ function appendBook(newBook){
 
        readButton.addEventListener('click',()=>{
         let bookIndex = index
-        if (myLibrary[bookIndex].read == 'Read'){
+        if (myLibrary[bookIndex].read == 'Complete'){
 
           myLibrary[bookIndex].read = 'Not Read'
           readButton.innerHTML = myLibrary[bookIndex].read 
           readButton.style.background = '#eb0800'
         } else{
 
-          myLibrary[bookIndex].read = 'Read'
+          myLibrary[bookIndex].read = 'Complete'
           readButton.innerHTML = myLibrary[bookIndex].read 
           readButton.style.background = '#00d600'
         }
@@ -159,8 +159,8 @@ function appendBook(newBook){
 // Check local storage for a saved library
 function checkStorage(){
   if (localStorage.getItem('library') == null){
-    let theBladeItself = new Book('The Blade Itself','Joe Abercrombie','560','Read')
-    let historyOfTime = new Book('A Brief History of Time','Stephen Hawking','256','Read')
+    let theBladeItself = new Book('The Blade Itself','Joe Abercrombie','560','Complete')
+    let historyOfTime = new Book('A Brief History of Time','Stephen Hawking','256','Complete')
      myLibrary.push(theBladeItself)
      myLibrary.push(historyOfTime)
      appendBook(theBladeItself)
