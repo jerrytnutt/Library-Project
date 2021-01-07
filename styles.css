@@ -4,6 +4,7 @@ body{
     justify-content: center;
     align-items: center;
     background-color: #f2f2f2;
+    margin: 0px;
 }
 .display{
     position: fixed; 
